@@ -7,11 +7,11 @@ export type JobPattern = {
 };
 
 export const defaultPatterns: JobPattern[] = [
-  {
-    id: "name-length>10",
-    description: "The job name length > 10",
-    match: (job) => job.jobName.length > 10,
-  },
+  // {
+  //   id: "name-length>10",
+  //   description: "The job name length > 10",
+  //   match: (job) => job.jobName.length > 10,
+  // },
   {
     id: "has-digits",
     description: "The job name contains numbers",
