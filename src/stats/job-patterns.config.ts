@@ -9,12 +9,12 @@ export type JobPattern = {
 export const defaultPatterns: JobPattern[] = [
   {
     id: "name-length>10",
-    description: "Task name length > 10",
+    description: "The job name length > 10",
     match: (job) => job.jobName.length > 10,
   },
   {
     id: "has-digits",
-    description: "The task name contains numbers",
+    description: "The job name contains numbers",
     match: (job) => /\d/.test(job.jobName),
   },
   {
@@ -26,5 +26,27 @@ export const defaultPatterns: JobPattern[] = [
     id: "arg-contains-test",
     description: 'The argument contains the word "test"',
     match: (job) => job.arguments.some((arg) => arg.includes("test")),
+  },
+  {
+    id: "duration>5000",
+    description: "The job duration > 5000ms",
+    match: (job) =>
+      !!job.endTime && job.endTime.getTime() - job.startTime.getTime() > 5000,
+  },
+  {
+    id: "had-retry",
+    description: "The job was restarted once",
+    match: (job) => job.retryCount > 0,
+  },
+  {
+    id: "duration<1000",
+    description: "Job duration less than 1000ms",
+    match: (job) =>
+      !!job.endTime && job.endTime.getTime() - job.startTime.getTime() < 1000,
+  },
+  {
+    id: "name-contains-error",
+    description: 'The title contains the word "error"',
+    match: (job) => /error|fail/i.test(job.jobName),
   },
 ];
