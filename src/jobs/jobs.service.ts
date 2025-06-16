@@ -32,7 +32,18 @@ export class JobsService {
       } else if (job.retryCount === 0) {
         job.retryCount++;
         job.status = JobStatus.RETRIED;
-        this.startJob(jobName, args);
+
+        const retryChild = spawn("cmd.exe", [
+          "/c",
+          "dummy.bat",
+          ...job.arguments,
+        ]);
+        retryChild.on("exit", (retryCode) => {
+          job.exitCode = retryCode;
+          job.endTime = new Date();
+          job.status =
+            retryCode === 0 ? JobStatus.COMPLETED : JobStatus.CRASHED;
+        });
       } else {
         job.status = JobStatus.CRASHED;
       }
