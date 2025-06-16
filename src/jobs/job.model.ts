@@ -14,4 +14,5 @@ export interface Job {
   startTime: Date;
   endTime: Date | null;
   retryCount: number;
+  statusHistory: { status: JobStatus; at: Date }[];
 }
